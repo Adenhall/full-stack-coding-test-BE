@@ -1,0 +1,34 @@
+service:
+ name: fullstack-coding-test-server
+
+plugins:
+ - '@hewmen/serverless-plugin-typescript'
+ - serverless-plugin-optimize
+ - serverless-offline
+ - serverless-dotenv-plugin
+
+provider:
+ name: aws
+ runtime: nodejs12.x
+ profile: adenhall
+ region: ap-southeast-1
+
+functions:
+ main:
+   handler: src/lambda.handler
+   events:
+     - http:
+         method: any
+         path: /{any+}
+         cors:
+          origin: '*'
+          methods: ANY
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: false
+          cacheControl: max-age=600, s-maxage=600, proxy-revalidate
